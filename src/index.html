@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+   <div id="container">
+        <div class="content">
+            <input type="button" value="点击抛出错误" onclick="btnClick()" />
+            <input type="button" value="点击抛出promise错误" onclick="btnPromiseClick()" />
+            <input type="button" value="ajax成功" onclick="ajaxSuccess()" />
+            <input type="button" value="ajax失败" onclick="ajaxFail()" />
+        </div>
+    </div>
+
+    <script>
+        function btnClick() {
+            window.someVariable.error = 'someVariable';
+        }
+        function btnPromiseClick() {
+            new Promise(function (resolve, reject) {
+                reject(1)
+            });
+        }
+
+        function ajaxSuccess(){
+          var xhr = new XMLHttpRequest;
+          xhr.open('GET','http://localhost:3000/api/success',true)
+          xhr.responseType = 'json';
+          xhr.onload = function(res){
+            console.log(res)
+          }
+          xhr.send()
+        }
+    </script>
+    <script src="error.js"></script>
+</body>
+</html>
