@@ -33,11 +33,30 @@ let load = (cb) =>{
   }
   window.addEventListener('load',check,false)
 }
+let domReady = (cb) =>{
+  let timer = null;
+  let check =()=>{
+    if(performance.timing.domInteractive){ //不停检测dom是否加载完，加载完则发送统计，不要等到所有资源都加载完毕再统计，油可能某个资源出错一直加载不到
+      clearTimeout(timer);
+      cb()
+    }else{
+      timer = setTimeout(check, 100);
+    }
+  }
+  window.addEventListener('DOMContentLoaded',check,false)
+}
 export default {
   init(cb) {
+    domReady(()=>{ //有可能没有处罚onload，dom
+      let perfData = performance.timing;
+      let data = processData(perfData)
+      data.type = 'domready';//load事件加载完毕才会统计
+      cb(data)
+    })
     load(()=>{
       let perfData = performance.timing;
       let data = processData(perfData)
+      data.type = 'loaded';//load事件加载完毕才会统计
       cb(data)
     })
     

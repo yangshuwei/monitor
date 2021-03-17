@@ -3,7 +3,7 @@ const http = require('http');
 let server = http.createServer(function(req,res){
   if(req.url == '/api/success'){
     res.writeHead(200, {
-      "Content-Type": "application/json", "Access-Control-Allow-Origin": "*"
+      "Content-Type": "application/json;charset=utf-8", "Access-Control-Allow-Origin": "*"
    });
     let data = JSON.stringify({ msg: 'success' })
     res.end(data)
