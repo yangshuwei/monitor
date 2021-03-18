@@ -8,7 +8,7 @@
 <body>
    <div id="container">
         <div class="content">
-            <input type="button" value="点击抛出错误" onclick="btnClick()" />
+            <input v-tark="123456" type="button" value="点击抛出错误" data-monitor="_01_02" onclick="btnClick(event)" />
             <input type="button" value="点击抛出promise错误" onclick="btnPromiseClick()" />
             <input type="button" value="ajax成功" onclick="ajaxSuccess()" />
             <input type="button" value="ajax失败" onclick="ajaxFail()" />
@@ -16,9 +16,23 @@
     </div>
 
     <script>
-        function btnClick() {
-            window.someVariable.error = 'someVariable';
-        }
+        let lastEvent;
+            ['click', 'pointerdown', 'touchstart', 'mousedown', 'keydown', 'mouseover'].forEach(event => {
+                document.addEventListener(event, (targetEvent) => {
+                    lastEvent = targetEvent;
+                }, {
+                    capture: true,//控制监听器是在捕获阶段还是冒泡阶段执行
+                    passive: true
+                })
+            })
+        window.addEventListener('click',(e)=>{
+            console.log(e)
+        },false)
+        
+        function btnClick(event) {
+            console.log(111)
+                // console.log(lastEvent)
+            }
         function btnPromiseClick() {
             new Promise(function (resolve, reject) {
                 reject(1)
@@ -34,10 +48,10 @@
           // }
           xhr.send()
         }
-        window.onload = function(){
-          ajaxSuccess()
-        ajaxSuccess()
-        }
+        // window.onload = function(){
+        //   ajaxSuccess()
+        //   ajaxSuccess()
+        // // }
         
     </script>
     <!-- <script src="error.js"></script> -->

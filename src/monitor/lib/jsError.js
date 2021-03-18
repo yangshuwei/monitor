@@ -5,6 +5,7 @@ export default{
     window.addEventListener('error',(e)=>{
       // console.log(e)
       let lastEvent = getLastEvent()
+      console.log(lastEvent)
       if(e.target&&(e.target.src||e.target.href)){
         let log = {
           kind: "stability",

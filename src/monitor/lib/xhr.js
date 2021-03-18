@@ -23,5 +23,6 @@ export default{
       this.addEventListener('abort',handle('abort'),false);
       return oldSend.apply(this,arguments)
     }
-  }
+  },
+  
 }
